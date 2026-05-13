@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Facilities – CCTE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <style>
+    :root {
+      --orange:      #E8650A;
+      --orange-lt:   #F47C2B;
+      --orange-pale: #FFF3EB;
+      --orange-mid:  #FAD9BF;
+      --grey-dark:   #18181B;
+      --grey-800:    #27272A;
+      --grey-700:    #3F3F46;
+      --grey-600:    #52525B;
+      --grey-500:    #71717A;
+      --grey-400:    #A1A1AA;
+      --grey-300:    #D4D4D8;
+      --grey-200:    #E4E4E7;
+      --grey-100:    #F4F4F5;
+      --grey-50:     #FAFAFA;
+      --white:       #FFFFFF;
+      --radius-xs:   4px;
+      --radius-sm:   8px;
+      --radius-md:   14px;
+      --radius-lg:   22px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg:   0 12px 40px rgba(0,0,0,.12);
+      --shadow-xl:   0 24px 60px rgba(0,0,0,.16);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--white); color:var(--grey-dark); line-height:1.6; -webkit-font-smoothing:antialiased; }
+    img { max-width:100%; display:block; }
+    a { text-decoration:none; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--grey-100); }
+    ::-webkit-scrollbar-thumb { background:var(--orange); border-radius:3px; }
+
+    /* ── HEADER ── */
+    header {
+      background:rgba(255,255,255,.98);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--grey-200);
+      padding:0 6%;
+      display:flex; justify-content:space-between; align-items:center;
+      height:72px; position:sticky; top:0; z-index:9999;
+      box-shadow:0 2px 12px rgba(0,0,0,.06);
+      transition:box-shadow .3s;
+    }
+    header.scrolled { box-shadow:0 4px 24px rgba(0,0,0,.1); }
+    .logo-wrap { display:flex; align-items:center; gap:13px; cursor:pointer; transition:transform .2s; }
+    .logo-wrap:hover { transform:scale(1.02); }
+    .logo-wrap img { width:48px; height:48px; border-radius:50%; object-fit:cover; border:2.5px solid var(--orange); box-shadow:0 2px 10px rgba(232,101,10,.25); }
+    .logo-text .school { font-size:15px; font-weight:800; color:var(--grey-dark); letter-spacing:-.3px; }
+    .logo-text .dept { font-size:11px; font-weight:500; color:var(--grey-400); display:flex; align-items:center; gap:4px; margin-top:1px; }
+    .logo-text .dept i { font-size:10px; color:var(--orange); }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-links a { font-size:13px; font-weight:600; color:var(--grey-600); padding:8px 13px; border-radius:var(--radius-sm); transition:all .2s; display:flex; align-items:center; gap:6px; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:4px; left:50%; width:0; height:2px; background:var(--orange); border-radius:1px; transform:translateX(-50%); transition:width .3s; }
+    .nav-links a:hover::after, .nav-links a.active::after { width:60%; }
+    .nav-links a i { font-size:14px; }
+    .nav-links a:hover { color:var(--orange); background:var(--orange-pale); }
+    .nav-links a.active { color:var(--orange); background:var(--orange-pale); }
+    .nav-links .nav-cta { background:linear-gradient(135deg, var(--orange), var(--orange-lt)); color:var(--white); margin-left:8px; box-shadow:0 6px 18px rgba(232,101,10,.38); font-weight:700; }
+    .nav-links .nav-cta::after { display:none; }
+    .nav-links .nav-cta:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(232,101,10,.48); }
+    .hamburger { display:none; background:none; border:1.5px solid var(--grey-200); font-size:20px; color:var(--grey-dark); cursor:pointer; padding:7px 10px; border-radius:var(--radius-sm); transition:all .2s; }
+    .hamburger:hover { background:var(--orange-pale); border-color:var(--orange); color:var(--orange); }
+    .mobile-menu { display:none; flex-direction:column; position:fixed; top:72px; left:0; right:0; background:var(--white); border-bottom:1px solid var(--grey-200); padding:14px 6%; gap:4px; box-shadow:0 8px 24px rgba(0,0,0,.08); z-index:9998; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:14px; font-weight:600; color:var(--grey-700); padding:11px 14px; border-radius:var(--radius-sm); display:flex; align-items:center; gap:10px; transition:.2s; }
+    .mobile-menu a i { font-size:16px; color:var(--orange); }
+    .mobile-menu a:hover { background:var(--orange-pale); color:var(--orange); transform:translateX(4px); }
+
+    /* ── PAGE HERO BANNER ── */
+    .page-banner {
+      background: linear-gradient(120deg, rgba(18,18,20,.97) 50%, rgba(18,18,20,.80) 100%),
+        url('4.jpg') center/cover no-repeat;
+      padding: 80px 6% 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(232,101,10,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .pb-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,101,10,.18); border: 1px solid rgba(232,101,10,.4);
+      color: #F5A05A; font-size: 11px; font-weight: 700; letter-spacing:.12em;
+      text-transform: uppercase; padding: 8px 16px; border-radius: 40px; margin-bottom: 20px;
+      animation: fadeUp .6s ease both;
+    }
+    .pb-eyebrow i { font-size: 13px; }
+    .page-banner h1 {
+      font-size: 48px; font-weight: 900; color: var(--white); letter-spacing: -1.8px;
+      line-height: 1.08; margin-bottom: 14px;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .page-banner h1 em {
+      font-style: normal;
+      background: linear-gradient(120deg, var(--orange-lt), #F5A05A);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .page-banner p {
+      font-size: 16px; color: rgba(255,255,255,.55); max-width: 520px; line-height:1.78;
+      animation: fadeUp .7s .2s ease both;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 8px; margin-top: 28px;
+      font-size: 12px; color: rgba(255,255,255,.35);
+      animation: fadeUp .7s .3s ease both;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.45); transition:.2s; }
+    .breadcrumb a:hover { color: var(--orange-lt); }
+    .breadcrumb i { font-size: 11px; }
+
+    /* ── COMMON ── */
+    .section { padding:96px 6%; }
+    .section-alt { background: linear-gradient(180deg, var(--grey-50) 0%, #f9f9fa 100%); }
+    .sec-eyebrow { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+    .sec-eyebrow i { font-size:13px; }
+    .sec-heading { font-size:40px; font-weight:800; color:var(--grey-dark); letter-spacing:-1.2px; line-height:1.12; margin-bottom:16px; }
+    .sec-sub { font-size:16px; color:var(--grey-500); max-width:580px; line-height:1.78; }
+    .sec-hdr { margin-bottom:60px; }
+    .sec-hdr-center { text-align:center; }
+    .sec-hdr-center .sec-sub { margin:0 auto; }
+    .divider { width:52px; height:4px; background:linear-gradient(90deg, var(--orange), var(--orange-lt)); border-radius:2px; margin:20px 0; }
+    .divider-center { margin:20px auto; }
+
+    /* ── FACILITIES OVERVIEW CARDS ── */
+    .fac-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+    .fac-card {
+      background:var(--white); border:1px solid var(--grey-200); border-radius:var(--radius-lg);
+      padding:36px 24px 30px; text-align:center; transition:all .35s cubic-bezier(.25,.8,.25,1);
+      position:relative; overflow:hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .fac-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--orange), var(--orange-lt));
+      transform:scaleX(0); transform-origin:left; transition:transform .35s;
+    }
+    .fac-card::after {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 50% 0%, rgba(232,101,10,.04) 0%, transparent 70%);
+      opacity:0; transition:opacity .35s;
+    }
+    .fac-card:hover::before { transform:scaleX(1); }
+    .fac-card:hover::after { opacity:1; }
+    .fac-card:hover { transform:translateY(-8px); box-shadow:0 20px 48px rgba(0,0,0,.12); border-color:var(--orange-mid); }
+    .fac-icon {
+      width:64px; height:64px; background:var(--orange-pale); border-radius:var(--radius-md);
+      display:flex; align-items:center; justify-content:center; margin:0 auto 20px;
+      font-size:28px; color:var(--orange); transition:.35s;
+      box-shadow: 0 4px 14px rgba(232,101,10,.15);
+    }
+    .fac-card:hover .fac-icon { background:linear-gradient(135deg, var(--orange), var(--orange-lt)); color:var(--white); box-shadow:0 8px 24px rgba(232,101,10,.35); transform:scale(1.08); }
+    .fac-card h3 { font-size:15px; font-weight:700; color:var(--grey-dark); margin-bottom:10px; }
+    .fac-card p { font-size:13px; color:var(--grey-500); line-height:1.68; }
+
+    /* ── FAC DETAIL CARDS ── */
+    .fac-detail-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:32px; margin-top:72px; }
+    .fac-detail-card {
+      background:var(--white); border:1px solid var(--grey-200); border-radius:var(--radius-lg);
+      overflow:hidden; transition:all .35s cubic-bezier(.25,.8,.25,1);
+      box-shadow:0 4px 16px rgba(0,0,0,.06);
+    }
+    .fac-detail-card:hover { transform:translateY(-10px); box-shadow:0 28px 64px rgba(0,0,0,.14); border-color:var(--orange-mid); }
+    .fac-detail-img { width:100%; height:230px; object-fit:cover; display:block; transition:transform .45s cubic-bezier(.25,.8,.25,1); }
+    .fac-detail-card:hover .fac-detail-img { transform:scale(1.05); }
+    .fac-detail-img-wrap { overflow:hidden; position:relative; }
+    .fac-detail-img-wrap::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to bottom, transparent 50%, rgba(18,18,20,.18) 100%);
+      pointer-events:none;
+    }
+    .fac-detail-tag {
+      position:absolute; top:16px; left:16px; z-index:2;
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(255,255,255,.95); color:var(--orange); font-size:10px;
+      font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      padding:6px 13px; border-radius:40px; box-shadow:0 4px 12px rgba(0,0,0,.12);
+      backdrop-filter:blur(4px);
+    }
+    .fac-detail-tag i { font-size:12px; }
+    .fac-detail-body { padding:28px; }
+    .fac-detail-icon {
+      width:48px; height:48px; background:var(--orange-pale); border-radius:var(--radius-sm);
+      display:flex; align-items:center; justify-content:center; font-size:20px;
+      color:var(--orange); margin-bottom:16px;
+      box-shadow:0 4px 12px rgba(232,101,10,.15);
+    }
+    .fac-detail-body h3 { font-size:19px; font-weight:700; color:var(--grey-dark); margin-bottom:10px; }
+    .fac-detail-body p { font-size:14px; color:var(--grey-500); line-height:1.75; }
+
+    /* ── FOOTER ── */
+    .footer { background:linear-gradient(135deg, var(--grey-dark) 0%, #1a1a1d 100%); padding:60px 6% 30px; border-top:1px solid rgba(255,255,255,.06); }
+    .footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,.07); }
+    .footer-logo { display:flex; align-items:center; gap:12px; margin-bottom:16px; cursor:pointer; transition:transform .2s; }
+    .footer-logo:hover { transform:scale(1.03); }
+    .footer-logo img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--orange); box-shadow:0 2px 8px rgba(232,101,10,.25); }
+    .footer-logo .fn { font-size:15px; font-weight:800; color:var(--white); }
+    .footer-logo .fl { font-size:11px; color:rgba(255,255,255,.3); margin-top:2px; }
+    .footer-desc { font-size:13px; color:rgba(255,255,255,.32); line-height:1.78; max-width:260px; margin-bottom:22px; }
+    .footer-soc { display:flex; gap:10px; }
+    .footer-soc-btn { width:38px; height:38px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:16px; color:rgba(255,255,255,.38); cursor:pointer; transition:all .25s; }
+    .footer-soc-btn:hover { background:linear-gradient(135deg, var(--orange), var(--orange-lt)); color:var(--white); border-color:var(--orange); transform:translateY(-3px); box-shadow:0 6px 18px rgba(232,101,10,.3); }
+    .footer-col h5 { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:20px; display:flex; align-items:center; gap:6px; }
+    .footer-col h5::before { content:''; width:3px; height:3px; background:var(--orange); border-radius:50%; }
+    .footer-links { display:flex; flex-direction:column; gap:12px; }
+    .footer-links a { font-size:13px; color:rgba(255,255,255,.32); transition:.2s; display:flex; align-items:center; gap:7px; }
+    .footer-links a i { font-size:13px; color:var(--orange); opacity:.65; }
+    .footer-links a:hover { color:rgba(255,255,255,.72); padding-left:4px; }
+    .footer-ci { display:flex; align-items:flex-start; gap:10px; margin-bottom:14px; }
+    .footer-ci i { font-size:14px; color:var(--orange-lt); margin-top:2px; flex-shrink:0; }
+    .footer-ci span { font-size:13px; color:rgba(255,255,255,.32); line-height:1.55; }
+    .footer-bottom { padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-copy { font-size:12px; color:rgba(255,255,255,.2); }
+    .footer-btm-links { display:flex; gap:20px; }
+    .footer-btm-links a { font-size:12px; color:rgba(255,255,255,.2); transition:.2s; }
+    .footer-btm-links a:hover { color:rgba(255,255,255,.5); }
+
+    /* ── BACK TO TOP ── */
+    .btt { position:fixed; bottom:28px; right:28px; width:46px; height:46px; background:linear-gradient(135deg, var(--orange), var(--orange-lt)); color:var(--white); border:none; border-radius:var(--radius-sm); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(232,101,10,.45); transition:all .25s; z-index:999; opacity:0; pointer-events:none; }
+    .btt.visible { opacity:1; pointer-events:all; }
+    .btt:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(232,101,10,.55); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1060px) { .fac-grid { grid-template-columns:1fr 1fr; } .footer-top { grid-template-columns:1fr 1fr; } }
+    @media(max-width:760px) {
+      .nav-links { display:none; } .hamburger { display:flex; }
+      .fac-grid { grid-template-columns:1fr 1fr; }
+      .fac-detail-grid { grid-template-columns:1fr; }
+      .footer-top { grid-template-columns:1fr; gap:32px; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .sec-heading { font-size:30px; }
+      .page-banner h1 { font-size:34px; }
+    }
+    @media(max-width:480px) { .fac-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="logo-wrap" onclick="window.location.href='home.html'">
+    <img src="logo.jpg" alt="CCTE Logo"/>
+    <div class="logo-text">
+      <div class="school">CCTE – Lipa City Colleges</div>
+      <div class="dept"><i class="bi bi-geo-alt-fill"></i>Lipa City, Batangas</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="nav-links">
+      <a href="home.html"><i class="bi bi-house-door"></i>Home</a>
+      <a href="about.html"><i class="bi bi-info-circle"></i>About</a>
+      <a href="programs.html"><i class="bi bi-mortarboard"></i>Programs</a>
+      <a href="camp.html"><i class="bi bi-airplane"></i>Taiwan Camp</a>
+      <a href="facilities.html" class="active"><i class="bi bi-building"></i>Facilities</a>
+      <a href="announcements.html"><i class="bi bi-megaphone"></i>News</a>
+      <a href="contact.html" class="nav-cta"><i class="bi bi-envelope-fill"></i>Contact Us</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="bi bi-list" id="ham-icon"></i></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html" onclick="closeMenu()"><i class="bi bi-house-door"></i>Home</a>
+  <a href="about.html" onclick="closeMenu()"><i class="bi bi-info-circle"></i>About</a>
+  <a href="programs.html" onclick="closeMenu()"><i class="bi bi-mortarboard"></i>Programs</a>
+  <a href="camp.html" onclick="closeMenu()"><i class="bi bi-airplane"></i>Taiwan Camp</a>
+  <a href="facilities.html" onclick="closeMenu()"><i class="bi bi-building"></i>Facilities</a>
+  <a href="announcements.html" onclick="closeMenu()"><i class="bi bi-megaphone"></i>News</a>
+  <a href="contact.html" onclick="closeMenu()"><i class="bi bi-envelope"></i>Contact Us</a>
+</div>
+
+<!-- PAGE BANNER -->
+<div class="page-banner">
+  <div class="pb-eyebrow"><i class="bi bi-building-fill"></i>Our Infrastructure</div>
+  <h1>World-Class<br><em>Facilities</em></h1>
+  <p>Modern, purpose-built spaces designed for hands-on learning, collaboration, and technological innovation.</p>
+  <div class="breadcrumb"><a href="home.html">Home</a><i class="bi bi-chevron-right"></i><span style="color:var(--orange-lt);">Facilities</span></div>
+</div>
+
+<!-- FACILITIES -->
+<section class="section section-alt" id="facilities">
+  <div class="sec-hdr sec-hdr-center reveal">
+    <span class="sec-eyebrow"><i class="bi bi-building-fill"></i>Our Infrastructure</span>
+    <h2 class="sec-heading">World-Class Facilities</h2>
+    <div class="divider divider-center"></div>
+    <p class="sec-sub">Modern, purpose-built spaces designed for hands-on learning, collaboration, and technological innovation.</p>
+  </div>
+
+  <!-- Overview Cards -->
+  <div class="fac-grid">
+    <div class="fac-card reveal">
+      <div class="fac-icon"><i class="bi bi-display-fill"></i></div>
+      <h3>Computer Laboratory</h3>
+      <p>Fully equipped for programming, web development, and software training with high-performance hardware and licensed software.</p>
+    </div>
+    <div class="fac-card reveal">
+      <div class="fac-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+      <h3>Electronics Laboratory</h3>
+      <p>Hands-on stations for circuit design, embedded systems, microcontroller programming, and automation project development.</p>
+    </div>
+    <div class="fac-card reveal">
+      <div class="fac-icon"><i class="bi bi-search"></i></div>
+      <h3>Research Area</h3>
+      <p>A dedicated space for capstone development, technical documentation, peer review, and thorough project testing.</p>
+    </div>
+    <div class="fac-card reveal">
+      <div class="fac-icon"><i class="bi bi-lightbulb-fill"></i></div>
+      <h3>Innovation Hub</h3>
+      <p>A creative collaboration space where student teams prototype, iterate, and develop technology-driven solutions.</p>
+    </div>
+  </div>
+
+  <!-- Detailed Cards with Images -->
+  <div class="fac-detail-grid">
+    <div class="fac-detail-card reveal">
+      <div class="fac-detail-img-wrap">
+        <img class="fac-detail-img" src="linux.jpg" alt="Computer Lab" loading="lazy"/>
+        <span class="fac-detail-tag"><i class="bi bi-pc-display-horizontal"></i>Computing</span>
+      </div>
+      <div class="fac-detail-body">
+        <div class="fac-detail-icon"><i class="bi bi-display-fill"></i></div>
+        <h3>Linux Laboratory</h3>
+        <p>High-performance workstations, development servers, and cloud environments for coding, software development, and IT training. Equipped with licensed software tools for programming, design, and systems analysis.</p>
+      </div>
+    </div>
+
+    <div class="fac-detail-card reveal">
+      <div class="fac-detail-img-wrap">
+        <img class="fac-detail-img" src="smart.jpg" alt="Electronics Lab" loading="lazy"/>
+        <span class="fac-detail-tag"><i class="bi bi-cpu-fill"></i>Engineering</span>
+      </div>
+      <div class="fac-detail-body">
+        <div class="fac-detail-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+        <h3>Smart Laboratory</h3>
+        <p>Soldering stations, oscilloscopes, power supplies, circuit boards, and components for hands-on electronics and embedded systems learning. Ideal for microcontroller programming and automation projects.</p>
+      </div>
+    </div>
+
+    <div class="fac-detail-card reveal">
+      <div class="fac-detail-img-wrap">
+        <img class="fac-detail-img" src="work.jpg" alt="Research Area" loading="lazy"/>
+        <span class="fac-detail-tag"><i class="bi bi-search"></i>Research</span>
+      </div>
+      <div class="fac-detail-body">
+        <div class="fac-detail-icon"><i class="bi bi-search"></i></div>
+        <h3>Work Shop</h3>
+        <p>Dedicated spaces for academic research projects, data analysis, technical writing, and collaborative student-faculty research initiatives. Supports capstone development, peer review, and project documentation.</p>
+      </div>
+    </div>
+
+    <div class="fac-detail-card reveal">
+      <div class="fac-detail-img-wrap">
+        <img class="fac-detail-img" src="6.jpg" alt="Innovation Hub" loading="lazy"/>
+        <span class="fac-detail-tag"><i class="bi bi-lightbulb-fill"></i>Innovation</span>
+      </div>
+      <div class="fac-detail-body">
+        <div class="fac-detail-icon"><i class="bi bi-lightbulb-fill"></i></div>
+        <h3>Innovation Hub</h3>
+        <p>Prototyping and design space with 3D printers, cutting tools, design software, and maker equipment. A creative collaboration space where student teams prototype, iterate, and build technology-driven solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo" onclick="window.location.href='home.html'">
+        <img src="logo.jpg" alt="CCTE Logo"/>
+        <div><div class="fn">CCTE</div><div class="fl">Lipa City Colleges</div></div>
+      </div>
+      <p class="footer-desc">Empowering future technology leaders through quality education, innovation, and global learning opportunities in Lipa City, Batangas.</p>
+      <div class="footer-soc">
+        <div class="footer-soc-btn"><i class="bi bi-facebook"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-messenger"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-youtube"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-instagram"></i></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <div class="footer-links">
+        <a href="home.html"><i class="bi bi-chevron-right"></i>Home</a>
+        <a href="about.html"><i class="bi bi-chevron-right"></i>About CCTE</a>
+        <a href="programs.html"><i class="bi bi-chevron-right"></i>Programs</a>
+        <a href="camp.html"><i class="bi bi-chevron-right"></i>Taiwan Camp</a>
+        <a href="facilities.html"><i class="bi bi-chevron-right"></i>Facilities</a>
+        <a href="announcements.html"><i class="bi bi-chevron-right"></i>Announcements</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Programs</h5>
+      <div class="footer-links">
+        <a href="programs.html"><i class="bi bi-pc-display-horizontal"></i>Computer Studies</a>
+        <a href="programs.html"><i class="bi bi-cpu"></i>Engineering Technology</a>
+        <a href="programs.html"><i class="bi bi-lightbulb"></i>Innovation Projects</a>
+        <a href="camp.html"><i class="bi bi-airplane"></i>International Programs</a>
+        <a href="contact.html"><i class="bi bi-briefcase"></i>OJT &amp; Internship</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <div class="footer-ci"><i class="bi bi-geo-alt-fill"></i><span>Lipa City, Batangas, Philippines</span></div>
+      <div class="footer-ci"><i class="bi bi-envelope-fill"></i><span>ccte@lipacc.edu.ph</span></div>
+      <div class="footer-ci"><i class="bi bi-telephone-fill"></i><span>0912-345-6789</span></div>
+      <div class="footer-ci"><i class="bi bi-clock-fill"></i><span>Mon–Fri, 8:00 AM – 5:00 PM</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 College of Computing and Technology Engineering – Lipa City Colleges. All Rights Reserved.</div>
+    <div class="footer-btm-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="bi bi-chevron-up"></i>
+</button>
+
+<script>
+  function toggleMenu() {
+    var m=document.getElementById('mobileMenu'), i=document.getElementById('ham-icon');
+    m.classList.toggle('open');
+    i.className=m.classList.contains('open')?'bi bi-x-lg':'bi bi-list';
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('ham-icon').className='bi bi-list';
+  }
+  window.addEventListener('scroll',function(){
+    document.getElementById('btt').classList.toggle('visible',window.scrollY>400);
+    document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>20);
+  });
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  reveals.forEach(r=>observer.observe(r));
+</script>
+</body>
+</html>

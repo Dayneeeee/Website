@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Announcements – CCTE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <style>
+    :root {
+      --orange:      #E8650A;
+      --orange-lt:   #F47C2B;
+      --orange-pale: #FFF3EB;
+      --orange-mid:  #FAD9BF;
+      --grey-dark:   #18181B;
+      --grey-800:    #27272A;
+      --grey-700:    #3F3F46;
+      --grey-600:    #52525B;
+      --grey-500:    #71717A;
+      --grey-400:    #A1A1AA;
+      --grey-300:    #D4D4D8;
+      --grey-200:    #E4E4E7;
+      --grey-100:    #F4F4F5;
+      --grey-50:     #FAFAFA;
+      --white:       #FFFFFF;
+      --radius-xs:   4px;
+      --radius-sm:   8px;
+      --radius-md:   14px;
+      --radius-lg:   22px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.06);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg:   0 12px 40px rgba(0,0,0,.12);
+      --shadow-xl:   0 24px 60px rgba(0,0,0,.16);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--white); color:var(--grey-dark); line-height:1.6; -webkit-font-smoothing:antialiased; }
+    img { max-width:100%; display:block; }
+    a { text-decoration:none; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--grey-100); }
+    ::-webkit-scrollbar-thumb { background:var(--orange); border-radius:3px; }
+
+    /* ── HEADER ── */
+    header {
+      background:rgba(255,255,255,.98);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--grey-200);
+      padding:0 6%;
+      display:flex; justify-content:space-between; align-items:center;
+      height:72px; position:sticky; top:0; z-index:9999;
+      box-shadow:0 1px 0 rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.04);
+      transition:box-shadow .3s;
+    }
+    header.scrolled { box-shadow:0 2px 20px rgba(0,0,0,.1); }
+    .logo-wrap { display:flex; align-items:center; gap:13px; cursor:pointer; transition:transform .22s; }
+    .logo-wrap:hover { transform:scale(1.02); }
+    .logo-wrap img { width:48px; height:48px; border-radius:50%; object-fit:cover; border:2.5px solid var(--orange); box-shadow:0 2px 10px rgba(232,101,10,.24); }
+    .logo-text .school { font-size:15px; font-weight:800; color:var(--grey-dark); letter-spacing:-.3px; }
+    .logo-text .dept { font-size:11px; font-weight:500; color:var(--grey-400); display:flex; align-items:center; gap:4px; margin-top:1px; }
+    .logo-text .dept i { font-size:10px; color:var(--orange); }
+    .nav-links { display:flex; align-items:center; gap:2px; }
+    .nav-links a { font-size:13px; font-weight:600; color:var(--grey-600); padding:8px 13px; border-radius:var(--radius-sm); transition:all .22s; display:flex; align-items:center; gap:6px; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:4px; left:50%; width:0; height:2px; background:var(--orange); border-radius:1px; transform:translateX(-50%); transition:width .3s; }
+    .nav-links a:hover::after,.nav-links a.active::after { width:60%; }
+    .nav-links a i { font-size:14px; }
+    .nav-links a:hover,.nav-links a.active { color:var(--orange); background:var(--orange-pale); }
+    .nav-links .nav-cta { background:linear-gradient(135deg,var(--orange),var(--orange-lt)); color:var(--white); margin-left:8px; box-shadow:0 4px 16px rgba(232,101,10,.36); font-weight:700; }
+    .nav-links .nav-cta::after { display:none; }
+    .nav-links .nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,101,10,.45); }
+    .hamburger { display:none; background:none; border:1.5px solid var(--grey-200); font-size:20px; color:var(--grey-dark); cursor:pointer; padding:7px 10px; border-radius:var(--radius-sm); transition:all .22s; }
+    .hamburger:hover { background:var(--orange-pale); border-color:var(--orange); color:var(--orange); }
+    .mobile-menu { display:none; flex-direction:column; position:fixed; top:72px; left:0; right:0; background:var(--white); border-bottom:1px solid var(--grey-200); padding:14px 6%; gap:4px; z-index:9998; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:14px; font-weight:600; color:var(--grey-700); padding:11px 14px; border-radius:var(--radius-sm); display:flex; align-items:center; gap:10px; transition:.2s; }
+    .mobile-menu a i { font-size:16px; color:var(--orange); }
+    .mobile-menu a:hover { background:var(--orange-pale); color:var(--orange); transform:translateX(4px); }
+
+    /* ── SECTION HEADER ── */
+    .section { padding:96px 6%; }
+    .section-white { background:var(--white); }
+    .sec-eyebrow { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+    .sec-eyebrow i { font-size:13px; }
+    .sec-heading { font-size:38px; font-weight:800; color:var(--grey-dark); letter-spacing:-1.2px; line-height:1.12; margin-bottom:16px; }
+    .sec-sub { font-size:16px; color:var(--grey-500); max-width:580px; line-height:1.78; }
+    .sec-hdr { margin-bottom:52px; }
+    .divider { width:48px; height:4px; background:linear-gradient(90deg,var(--orange),var(--orange-lt)); border-radius:2px; margin:20px 0; }
+
+    /* ── ANNOUNCEMENTS ── */
+    .ann-layout { display:grid; grid-template-columns:1fr 360px; gap:36px; align-items:start; }
+
+    /* Cards */
+    .ann-main { display:flex; flex-direction:column; gap:14px; }
+
+    .ann-card {
+      background:var(--white);
+      border:1px solid var(--grey-200);
+      border-radius:var(--radius-md);
+      padding:26px 28px;
+      display:flex; gap:20px; align-items:flex-start;
+      transition:all .28s;
+      cursor:pointer;
+      box-shadow:var(--shadow-sm);
+      position:relative; overflow:hidden;
+    }
+    .ann-card::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+      background:linear-gradient(180deg,var(--orange),var(--orange-lt));
+      transform:scaleY(0); transform-origin:top; transition:transform .28s;
+    }
+    .ann-card:hover::before { transform:scaleY(1); }
+    .ann-card:hover { border-color:var(--orange-mid); box-shadow:var(--shadow-lg); transform:translateX(5px); }
+
+    .ann-icon {
+      width:48px; height:48px; background:var(--orange-pale);
+      border-radius:var(--radius-sm); display:flex; align-items:center;
+      justify-content:center; font-size:20px; color:var(--orange); flex-shrink:0;
+      transition:.28s;
+    }
+    .ann-card:hover .ann-icon { background:var(--orange); color:var(--white); }
+
+    .ann-meta { font-size:11px; font-weight:600; color:var(--grey-400); text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+    .ann-meta i { font-size:12px; }
+    .ann-card h3 { font-size:16px; font-weight:700; color:var(--grey-dark); margin-bottom:7px; line-height:1.4; }
+    .ann-card p { font-size:13.5px; color:var(--grey-500); line-height:1.68; }
+
+    .ann-badge-pill {
+      display:inline-flex; align-items:center; gap:4px;
+      font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+      color:var(--white); padding:4px 12px; border-radius:40px; margin-bottom:8px;
+    }
+
+    /* Sidebar */
+    .ann-side {
+      background:var(--grey-dark);
+      border-radius:var(--radius-lg);
+      padding:32px;
+      position:sticky; top:90px;
+      box-shadow:var(--shadow-xl);
+    }
+
+    .ann-side-title {
+      font-size:11px; font-weight:700; color:rgba(255,255,255,.38);
+      letter-spacing:.12em; text-transform:uppercase;
+      margin-bottom:22px; display:flex; align-items:center; gap:8px;
+    }
+    .ann-side-title i { color:var(--orange); font-size:14px; }
+
+    .quick-link {
+      display:flex; align-items:center; gap:14px;
+      padding:14px 0; border-bottom:1px solid rgba(255,255,255,.06);
+      cursor:pointer; transition:.22s;
+    }
+    .quick-link:last-of-type { border-bottom:none; }
+    .quick-link:hover .ql-title { color:var(--orange-lt); }
+    .quick-link:hover .ql-icon { background:rgba(232,101,10,.18); }
+
+    .ql-icon {
+      width:38px; height:38px; background:rgba(255,255,255,.06);
+      border-radius:var(--radius-xs); display:flex; align-items:center;
+      justify-content:center; font-size:16px; color:var(--orange-lt);
+      flex-shrink:0; transition:.22s;
+    }
+    .ql-title { font-size:13px; font-weight:600; color:rgba(255,255,255,.65); transition:.22s; }
+    .ql-sub { font-size:11px; color:rgba(255,255,255,.28); margin-top:2px; }
+    .ql-arrow { margin-left:auto; font-size:13px; color:rgba(255,255,255,.18); }
+
+    .help-box {
+      background:rgba(232,101,10,.12); border:1px solid rgba(232,101,10,.22);
+      border-radius:var(--radius-md); padding:22px; margin-top:20px;
+    }
+    .help-box-title { font-size:13px; font-weight:700; color:rgba(255,255,255,.75); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .help-box-title i { color:var(--orange-lt); }
+    .help-link { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); cursor:pointer; transition:.2s; }
+    .help-link:last-child { border-bottom:none; }
+    .help-link i { font-size:15px; color:var(--orange-lt); }
+    .help-link span { font-size:13px; color:rgba(255,255,255,.5); transition:.2s; }
+    .help-link:hover span { color:rgba(255,255,255,.82); }
+
+    /* ── FOOTER ── */
+    .footer { background:linear-gradient(135deg,var(--grey-dark) 0%,#1c1c1f 100%); padding:60px 6% 30px; border-top:1px solid rgba(255,255,255,.06); }
+    .footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:52px; padding-bottom:50px; border-bottom:1px solid rgba(255,255,255,.07); margin-bottom:30px; }
+    .footer-logo { display:flex; align-items:center; gap:12px; margin-bottom:16px; cursor:pointer; transition:transform .2s; }
+    .footer-logo:hover { transform:scale(1.04); }
+    .footer-logo img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--orange); box-shadow:0 2px 10px rgba(232,101,10,.26); }
+    .footer-logo .fn { font-size:15px; font-weight:800; color:var(--white); }
+    .footer-logo .fl { font-size:11px; color:rgba(255,255,255,.3); margin-top:2px; }
+    .footer-desc { font-size:13px; color:rgba(255,255,255,.32); line-height:1.78; max-width:260px; margin-bottom:22px; }
+    .footer-soc { display:flex; gap:10px; }
+    .footer-soc-btn { width:38px; height:38px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size:16px; color:rgba(255,255,255,.38); cursor:pointer; transition:all .25s; }
+    .footer-soc-btn:hover { background:linear-gradient(135deg,var(--orange),var(--orange-lt)); color:var(--white); border-color:transparent; transform:translateY(-3px); box-shadow:0 6px 18px rgba(232,101,10,.3); }
+    .footer-col h5 { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+    .footer-col h5::before { content:''; width:14px; height:2px; background:var(--orange); border-radius:1px; }
+    .footer-links { display:flex; flex-direction:column; gap:12px; }
+    .footer-links a { font-size:13px; color:rgba(255,255,255,.32); transition:.22s; display:flex; align-items:center; gap:7px; }
+    .footer-links a i { font-size:12px; color:var(--orange); opacity:.65; }
+    .footer-links a:hover { color:rgba(255,255,255,.74); padding-left:4px; }
+    .footer-ci { display:flex; align-items:flex-start; gap:10px; margin-bottom:14px; }
+    .footer-ci i { font-size:14px; color:var(--orange-lt); margin-top:2px; flex-shrink:0; }
+    .footer-ci span { font-size:13px; color:rgba(255,255,255,.32); line-height:1.55; }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-copy { font-size:12px; color:rgba(255,255,255,.2); }
+    .footer-btm-links { display:flex; gap:20px; }
+    .footer-btm-links a { font-size:12px; color:rgba(255,255,255,.2); transition:.2s; }
+    .footer-btm-links a:hover { color:rgba(255,255,255,.5); }
+
+    /* ── BACK TO TOP ── */
+    .btt { position:fixed; bottom:28px; right:28px; width:48px; height:48px; background:linear-gradient(135deg,var(--orange),var(--orange-lt)); color:var(--white); border:none; border-radius:var(--radius-sm); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 22px rgba(232,101,10,.46); transition:all .25s; z-index:999; opacity:0; pointer-events:none; }
+    .btt.visible { opacity:1; pointer-events:all; }
+    .btt:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(232,101,10,.5); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1060px) { .footer-top { grid-template-columns:1fr 1fr; } }
+    @media(max-width:860px) { .ann-layout { grid-template-columns:1fr; } }
+    @media(max-width:760px) {
+      .nav-links { display:none; } .hamburger { display:flex; }
+      .footer-top { grid-template-columns:1fr; gap:32px; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .sec-heading { font-size:28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="logo-wrap" onclick="window.location.href='home.html'">
+    <img src="logo.jpg" alt="CCTE Logo"/>
+    <div class="logo-text">
+      <div class="school">CCTE – Lipa City Colleges</div>
+      <div class="dept"><i class="bi bi-geo-alt-fill"></i>Lipa City, Batangas</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="nav-links">
+      <a href="home.html"><i class="bi bi-house-door"></i>Home</a>
+      <a href="about.html"><i class="bi bi-info-circle"></i>About</a>
+      <a href="programs.html"><i class="bi bi-mortarboard"></i>Programs</a>
+      <a href="camp.html"><i class="bi bi-airplane"></i>Taiwan Camp</a>
+      <a href="facilities.html"><i class="bi bi-building"></i>Facilities</a>
+      <a href="announcements.html" class="active"><i class="bi bi-megaphone"></i>News</a>
+      <a href="contact.html" class="nav-cta"><i class="bi bi-envelope-fill"></i>Contact</a>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="bi bi-list" id="ham-icon"></i></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html" onclick="closeMenu()"><i class="bi bi-house-door"></i>Home</a>
+  <a href="about.html" onclick="closeMenu()"><i class="bi bi-info-circle"></i>About</a>
+  <a href="programs.html" onclick="closeMenu()"><i class="bi bi-mortarboard"></i>Programs</a>
+  <a href="camp.html" onclick="closeMenu()"><i class="bi bi-airplane"></i>Taiwan Camp</a>
+  <a href="facilities.html" onclick="closeMenu()"><i class="bi bi-building"></i>Facilities</a>
+  <a href="announcements.html" onclick="closeMenu()"><i class="bi bi-megaphone"></i>News</a>
+  <a href="contact.html" onclick="closeMenu()"><i class="bi bi-envelope"></i>Contact</a>
+</div>
+
+<!-- ANNOUNCEMENTS -->
+<section class="section section-white" id="announcements">
+  <div class="sec-hdr">
+    <span class="sec-eyebrow"><i class="bi bi-megaphone-fill"></i>Stay Updated</span>
+    <h2 class="sec-heading">Latest Announcements</h2>
+    <div class="divider"></div>
+    <p class="sec-sub">News, events, and important updates from the College of Computing and Technology Engineering.</p>
+  </div>
+  <div class="ann-layout">
+    <!-- CARDS -->
+    <div class="ann-main">
+
+      <div class="ann-card">
+        <div class="ann-icon"><i class="bi bi-person-plus-fill"></i></div>
+        <div>
+          <span class="ann-badge-pill"><i class="bi bi-exclamation-circle-fill"></i>Important</span>
+          <div class="ann-meta"><i class="bi bi-calendar3"></i>January 15, 2025 — Admissions</div>
+          <h3>Enrollment Period Opened for AY 2025–2026</h3>
+          <p>Registration for the academic year 2025–2026 is now open. Visit the Registrar's Office or enroll online through our student portal. Early enrollment gets priority course selection!</p>
+        </div>
+      </div>
+
+      <div class="ann-card">
+        <div class="ann-icon"><i class="bi bi-cpu-fill"></i></div>
+        <div>
+          <span class="ann-badge-pill"><i class="bi bi-calendar-event-fill"></i>Event</span>
+          <div class="ann-meta"><i class="bi bi-calendar3"></i>March 8, 2025 — Showcase</div>
+          <h3>Annual Tech Innovation Showcase – Save the Date!</h3>
+          <p>Our students and faculty will present breakthrough projects in AI, IoT, robotics, and web technologies. Industry judges and recruitment opportunities. Mark your calendars!</p>
+        </div>
+      </div>
+
+      <div class="ann-card">
+        <div class="ann-icon"><i class="bi bi-award-fill"></i></div>
+        <div>
+          <span class="ann-badge-pill"><i class="bi bi-bell-fill"></i>Update</span>
+          <div class="ann-meta"><i class="bi bi-calendar3"></i>February 1, 2025 — Scholarships</div>
+          <h3>New Scholarship Program Launched</h3>
+          <p>CCTE now offers merit-based scholarships for high-performing students. Coverage includes tuition and laboratory fees. Apply before March 31, 2025. Eligibility: GPA 3.5 and above.</p>
+        </div>
+      </div>
+
+      <div class="ann-card">
+        <div class="ann-icon"><i class="bi bi-airplane-fill"></i></div>
+        <div>
+          <span class="ann-badge-pill"><i class="bi bi-globe2"></i>International</span>
+          <div class="ann-meta"><i class="bi bi-calendar3"></i>2025 — International Program</div>
+          <h3>Taiwan Science Camp 2025</h3>
+          <p>CCTE students successfully joined international science and technology activities in Taiwan, gaining valuable global exposure and forming new academic partnerships.</p>
+        </div>
+      </div>
+
+      <div class="ann-card">
+        <div class="ann-icon"><i class="bi bi-mortarboard-fill"></i></div>
+        <div>
+          <span class="ann-badge-pill"><i class="bi bi-book-fill"></i>Academic</span>
+          <div class="ann-meta"><i class="bi bi-calendar3"></i>Academic Year 2025–2026</div>
+          <h3>Capstone Project Development</h3>
+          <p>Students are actively developing innovative systems, smart devices, and research-based solutions as part of their final academic requirements this school year.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="ann-side">
+      <div class="ann-side-title"><i class="bi bi-bookmark-star-fill"></i>Quick Access</div>
+
+      <div class="quick-link">
+        <div class="ql-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+        <div><div class="ql-title">Admission Requirements</div><div class="ql-sub">View complete checklist</div></div>
+        <i class="bi bi-chevron-right ql-arrow"></i>
+      </div>
+      <div class="quick-link">
+        <div class="ql-icon"><i class="bi bi-calendar-event-fill"></i></div>
+        <div><div class="ql-title">Academic Calendar</div><div class="ql-sub">2025–2026 schedule</div></div>
+        <i class="bi bi-chevron-right ql-arrow"></i>
+      </div>
+      <div class="quick-link">
+        <div class="ql-icon"><i class="bi bi-cash-coin"></i></div>
+        <div><div class="ql-title">Tuition &amp; Fees</div><div class="ql-sub">Schedule of payments</div></div>
+        <i class="bi bi-chevron-right ql-arrow"></i>
+      </div>
+      <div class="quick-link">
+        <div class="ql-icon"><i class="bi bi-briefcase-fill"></i></div>
+        <div><div class="ql-title">OJT &amp; Internships</div><div class="ql-sub">Industry partners list</div></div>
+        <i class="bi bi-chevron-right ql-arrow"></i>
+      </div>
+      <div class="quick-link">
+        <div class="ql-icon"><i class="bi bi-trophy-fill"></i></div>
+        <div><div class="ql-title">Awards &amp; Recognition</div><div class="ql-sub">CCTE achievements</div></div>
+        <i class="bi bi-chevron-right ql-arrow"></i>
+      </div>
+
+      <div class="help-box">
+        <div class="help-box-title"><i class="bi bi-info-circle-fill"></i>Need Help?</div>
+        <div class="help-link"><i class="bi bi-envelope-fill"></i><span>Contact Us</span></div>
+        <div class="help-link"><i class="bi bi-telephone-fill"></i><span>0912-345-6789</span></div>
+        <div class="help-link"><i class="bi bi-geo-alt-fill"></i><span>Visit Campus</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="logo.jpg" alt="Logo"/>
+        <div><div class="fn">CCTE</div><div class="fl">Lipa City Colleges</div></div>
+      </div>
+      <p class="footer-desc">Empowering future technology leaders through quality education, innovation, and global learning opportunities in Lipa City, Batangas.</p>
+      <div class="footer-soc">
+        <div class="footer-soc-btn"><i class="bi bi-facebook"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-messenger"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-youtube"></i></div>
+        <div class="footer-soc-btn"><i class="bi bi-instagram"></i></div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <div class="footer-links">
+        <a href="home.html"><i class="bi bi-chevron-right"></i>Home</a>
+        <a href="about.html"><i class="bi bi-chevron-right"></i>About CCTE</a>
+        <a href="programs.html"><i class="bi bi-chevron-right"></i>Programs</a>
+        <a href="camp.html"><i class="bi bi-chevron-right"></i>Taiwan Camp</a>
+        <a href="facilities.html"><i class="bi bi-chevron-right"></i>Facilities</a>
+        <a href="announcements.html"><i class="bi bi-chevron-right"></i>Announcements</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Programs</h5>
+      <div class="footer-links">
+        <a href="programs.html"><i class="bi bi-pc-display-horizontal"></i>Computer Studies</a>
+        <a href="programs.html"><i class="bi bi-cpu"></i>Engineering Technology</a>
+        <a href="programs.html"><i class="bi bi-lightbulb"></i>Innovation Projects</a>
+        <a href="camp.html"><i class="bi bi-airplane"></i>International Programs</a>
+        <a href="contact.html"><i class="bi bi-briefcase"></i>OJT &amp; Internship</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <div class="footer-ci"><i class="bi bi-geo-alt-fill"></i><span>Lipa City, Batangas, Philippines</span></div>
+      <div class="footer-ci"><i class="bi bi-envelope-fill"></i><span>ccte@lipacc.edu.ph</span></div>
+      <div class="footer-ci"><i class="bi bi-telephone-fill"></i><span>0912-345-6789</span></div>
+      <div class="footer-ci"><i class="bi bi-clock-fill"></i><span>Mon–Fri, 8:00 AM – 5:00 PM</span></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 College of Computing and Technology Engineering – Lipa City Colleges. All Rights Reserved.</div>
+    <div class="footer-btm-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Sitemap</a></div>
+  </div>
+</footer>
+
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i class="bi bi-chevron-up"></i></button>
+
+<script>
+  function toggleMenu() { var m=document.getElementById('mobileMenu'),i=document.getElementById('ham-icon'); m.classList.toggle('open'); i.className=m.classList.contains('open')?'bi bi-x-lg':'bi bi-list'; }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.getElementById('ham-icon').className='bi bi-list'; }
+  window.addEventListener('scroll',function(){
+    document.getElementById('btt').classList.toggle('visible',window.scrollY>400);
+    document.getElementById('site-header').classList.toggle('scrolled',window.scrollY>10);
+  });
+</script>
+</body>
+</html>
